@@ -1,8 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9f6fd;
+  --foreground: #5b4b8a;
+  --primary: #c6a4e3;
+  --secondary: #a5dee5;
+  --accent: #ffccd5;
+  --highlight: #fdffb6;
+  --nav-bg: #bde0fe;
+  --game-bg: #e4f1f6;
+  --gradient-1: linear-gradient(135deg, var(--primary), var(--secondary));
+  --gradient-2: linear-gradient(135deg, var(--accent), var(--highlight));
+  --gradient-3: linear-gradient(135deg, var(--secondary), var(--accent));
+  --frost-bg: rgba(255, 255, 255, 0.25);
+  --frost-border: rgba(255, 255, 255, 0.3);
+  --frost-shadow: rgba(0, 0, 0, 0.1);
+  --overlay-bg: rgba(249, 246, 253, 0.65);
 }
 
 @theme inline {
@@ -14,13 +27,233 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #dcd3f0;
+    --foreground: #5b4b8a;
+    --primary: #b8c0ff;
+    --secondary: #9bf6ff;
+    --accent: #fec5e5;
+    --highlight: #ffffd1;
+    --nav-bg: #bde0fe;
+    --game-bg: #daeaf1;
+    --frost-bg: rgba(255, 255, 255, 0.15);
+    --overlay-bg: rgba(220, 211, 240, 0.65);
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image: url('/images/IMG_0054.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-bg);
+  z-index: -1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.navbar {
+  background: var(--gradient-1);
+  color: #ffffff;
+  border-radius: 0 0 10px 10px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 15px;
+  background: var(--frost-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--frost-border);
+  box-shadow: 0 4px 15px var(--frost-shadow);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.section:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 25px var(--frost-shadow);
+}
+
+.section::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.section:hover::after {
+  opacity: 1;
+  animation: shine 1.5s ease-out;
+}
+
+.section.bg-primary {
+  background: var(--gradient-1);
+}
+
+.section.bg-secondary {
+  background: var(--gradient-2);
+}
+
+.section.bg-accent {
+  background: var(--gradient-3);
+}
+
+.section.bg-highlight {
+  background: linear-gradient(135deg, var(--highlight), var(--primary));
+}
+
+.game-container {
+  background: var(--frost-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid var(--frost-border);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+button {
+  background: var(--gradient-1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  filter: brightness(1.08);
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+button:hover::after {
+  opacity: 1;
+  animation: shine 1s ease-out;
+}
+
+.card {
+  background: var(--frost-bg) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--frost-border) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.08) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+  filter: brightness(1.05) !important;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+  animation: shine 1.2s ease-out;
+}
+
+.card.bg-secondary {
+  background: var(--gradient-2) !important;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(30deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
+  }
 }
