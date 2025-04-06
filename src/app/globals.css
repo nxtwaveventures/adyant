@@ -42,7 +42,7 @@
 
 body {
   background-color: var(--background);
-  background-image: url('/adyant/images/IMG_0054.jpeg');
+  background-image: url('/images/IMG_0054.jpeg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -106,12 +106,10 @@ body::before {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transform: rotate(30deg);
   opacity: 0;
   transition: opacity 0.6s ease;
@@ -176,12 +174,10 @@ button::after {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transform: rotate(30deg);
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -216,12 +212,10 @@ button:hover::after {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transform: rotate(30deg);
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -241,6 +235,7 @@ button:hover::after {
   0% {
     transform: translateX(-100%) rotate(30deg);
   }
+
   100% {
     transform: translateX(100%) rotate(30deg);
   }
@@ -250,9 +245,11 @@ button:hover::after {
   0% {
     box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
   }
