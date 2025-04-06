@@ -39,7 +39,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /adyant_webpage
+          NEXT_PUBLIC_BASE_PATH: /adyant
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
