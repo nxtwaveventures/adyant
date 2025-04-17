@@ -1,35 +1,34 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from 'next/font/google';
 import "./globals.css";
+import ClientContainer from './client-container';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Import metadata from separate file
+import { metadata } from './metadata';
+
+// Export metadata for Next.js
+export { metadata };
+
+const inter = Inter({
   subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: "Adyant's Fun World",
-  description: "A fun website showcasing Adyant's love for football, arcade games, and toys",
-  icons: {
-    icon: '/favicon.ico',
-  },
-};
-
+// Root layout (Server Component)
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#6200ea" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+        <ClientContainer>
+          <div className="flex-grow">
+            {children}
+          </div>
+        </ClientContainer>
       </body>
     </html>
   );

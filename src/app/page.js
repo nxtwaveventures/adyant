@@ -1,208 +1,154 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-
-// Simple memory card game component
-function MemoryGame() {
-  const [cards, setCards] = useState([]);
-  const [flipped, setFlipped] = useState([]);
-  const [matched, setMatched] = useState([]);
-  const [canFlip, setCanFlip] = useState(true);
-  const [gameStarted, setGameStarted] = useState(false);
-  
-  const cardEmojis = [
-    { id: 1, emoji: "⚽", alt: "Football" },
-    { id: 2, emoji: "🎮", alt: "Gamepad" },
-    { id: 3, emoji: "🧸", alt: "Toy" },
-    { id: 4, emoji: "🤖", alt: "Robot" },
-    { id: 5, emoji: "🎨", alt: "Drawing" },
-    { id: 6, emoji: "🌮", alt: "Taco Bell" },
-    { id: 7, emoji: "📱", alt: "iPad" },
-  ];
-  
-  const initGame = () => {
-    // Create pairs of cards
-    const duplicatedCards = [...cardEmojis, ...cardEmojis]
-      .sort(() => Math.random() - 0.5)
-      .map((card, index) => ({ ...card, uniqueId: index }));
-    
-    setCards(duplicatedCards);
-    setFlipped([]);
-    setMatched([]);
-    setCanFlip(true);
-    setGameStarted(true);
-  };
-  
-  const handleCardClick = (uniqueId) => {
-    // Don't allow flipping if two cards are already flipped or clicking on matched card
-    if (!canFlip || flipped.includes(uniqueId) || matched.includes(uniqueId)) return;
-    
-    // Add card to flipped array
-    const newFlipped = [...flipped, uniqueId];
-    setFlipped(newFlipped);
-    
-    // Check if we have a pair
-    if (newFlipped.length === 2) {
-      const [firstId, secondId] = newFlipped;
-      const firstCard = cards.find(card => card.uniqueId === firstId);
-      const secondCard = cards.find(card => card.uniqueId === secondId);
-      
-      // Check if cards match
-      if (firstCard.id === secondCard.id) {
-        setMatched([...matched, firstId, secondId]);
-        setFlipped([]);
-      } else {
-        // Briefly disable flipping while cards are face up
-        setCanFlip(false);
-        // Flip cards back after 1 second
-        setTimeout(() => {
-          setFlipped([]);
-          setCanFlip(true);
-        }, 1000);
-      }
-    }
-  };
-  
-  // Check for win condition
-  useEffect(() => {
-    if (gameStarted && matched.length === cards.length && cards.length > 0) {
-      setTimeout(() => {
-        alert("You won! Great job!");
-      }, 500);
-    }
-  }, [matched, cards, gameStarted]);
-  
-  return (
-    <div className="game-container">
-      <h3 className="text-xl font-bold mb-4">Memory Game</h3>
-      {!gameStarted ? (
-        <button onClick={initGame} className="mb-4">Start Game</button>
-      ) : (
-        <>
-          <div className="grid grid-cols-4 gap-3">
-            {cards.map((card) => (
-              <div 
-                key={card.uniqueId}
-                onClick={() => handleCardClick(card.uniqueId)}
-                className={`card h-20 w-20 cursor-pointer bg-primary rounded-lg flex items-center justify-center shadow-md transition-transform ${
-                  flipped.includes(card.uniqueId) || matched.includes(card.uniqueId) 
-                    ? 'bg-secondary' 
-                    : ''
-                } ${matched.includes(card.uniqueId) ? 'opacity-70' : ''}`}
-              >
-                {(flipped.includes(card.uniqueId) || matched.includes(card.uniqueId)) ? (
-                  <div className="text-3xl">{card.emoji}</div>
-                ) : null}
-              </div>
-            ))}
-          </div>
-          <button onClick={initGame} className="mt-4">Reset Game</button>
-        </>
-      )}
-    </div>
-  );
-}
+import Link from "next/link";
+import Navbar from '../components/Navbar';
 
 export default function Home() {
-  return (
-    <div className="min-h-screen">
-      <nav className="navbar">
-        <div className="container">
-          <h1 className="text-3xl font-bold text-center">Adyant's Fun World</h1>
-        </div>
-      </nav>
-      
-      <div className="container">
-        {/* Hero section */}
-        <section className="section mb-8 bg-secondary">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-4">Hi! I'm Adyant</h2>
-              <p className="text-lg mb-4">
-                Welcome to my fun website! Here you can learn about all the things I love and even play a cool game.
-              </p>
+    return (
+        <div className="min-h-screen">
+            <Navbar />
+
+            <div className="container py-8 px-4 max-w-6xl mx-auto">
+                {/* Hero Section */}
+                <div className="bg-gradient-to-br from-blue-600 to-purple-700 p-8 rounded-xl mb-12">
+                    <div className="flex flex-col md:flex-row items-center gap-8">
+                        <div className="flex-1">
+                            <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">Welcome to Adyant's Fun World</h1>
+                            <p className="text-lg mb-6 text-white">
+                                Discover creative art, stories, and products designed by Adyant, a talented young artist with a mission to save our oceans.
+                            </p>
+                            <div className="flex flex-wrap gap-3">
+                                <Link href="/art"
+                                    className="bg-white text-blue-700 py-3 px-6 rounded-lg font-bold hover:bg-blue-50 transition-colors">
+                                    Explore Art Gallery
+                                </Link>
+                                <Link href="/mission"
+                                    className="bg-blue-500 text-white py-3 px-6 rounded-lg font-bold hover:bg-blue-600 transition-colors">
+                                    Our Ocean Mission
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="flex-1 md:flex justify-center hidden">
+                            <div className="w-80 h-80 rounded-xl overflow-hidden border-4 border-white shadow-xl">
+                                <Image
+                                    src="/images/adyant-watches-drawing.jpg"
+                                    alt="Adyant's Colorful Art"
+                                    width={320}
+                                    height={320}
+                                    className="object-cover w-full h-full"
+                                    unoptimized
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Features */}
+                <div className="grid md:grid-cols-3 gap-8 mb-12">
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                        <h2 className="text-2xl font-bold text-blue-700 mb-4">Shop & Support</h2>
+                        <div className="text-6xl mb-4 text-center">🛍️</div>
+                        <p className="text-gray-700 mb-6">
+                            Browse our collection of t-shirts and products featuring Adyant's creative designs.
+                        </p>
+                        <div className="text-center">
+                            <Link href="/art/t-shirt-catalogue" className="inline-block px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                                Shop Now
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                        <h2 className="text-2xl font-bold text-blue-700 mb-4">Ocean Cleanup</h2>
+                        <div className="text-6xl mb-4 text-center">🌊</div>
+                        <p className="text-gray-700 mb-6">
+                            Play our game, make a donation, and help us clean the oceans. 50% of proceeds go to conservation.
+                        </p>
+                        <div className="text-center">
+                            <Link href="/mission" className="inline-block px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                                Join Mission
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                        <h2 className="text-2xl font-bold text-blue-700 mb-4">Videos & Stories</h2>
+                        <div className="text-6xl mb-4 text-center">📚</div>
+                        <p className="text-gray-700 mb-6">
+                            Enjoy creative videos and upcoming storytelling adventures by Adyant.
+                        </p>
+                        <div className="text-center">
+                            <Link href="/videos" className="inline-block px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                                Watch & Read
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Featured Collections */}
+                <div className="bg-blue-50 p-6 rounded-xl mb-12">
+                    <h2 className="text-2xl font-bold text-blue-800 mb-4">Featured Collections</h2>
+                    <p className="text-gray-700 mb-8">
+                        Discover Adyant's most popular creations and support our ocean cleanup mission.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <div className="aspect-square relative rounded-lg overflow-hidden mb-4">
+                                <Image
+                                    src="/images/t-shirts/WhatsApp Image 2025-04-17 at 3.25.28 PM.jpeg"
+                                    alt="T-Shirt Collection"
+                                    fill
+                                    className="object-cover"
+                                    unoptimized
+                                />
+                            </div>
+                            <h3 className="text-lg font-bold text-blue-700">T-Shirt Collection</h3>
+                            <p className="text-sm text-gray-600 mb-4">Premium t-shirts with Adyant's designs</p>
+                            <Link href="/art/t-shirt-catalogue" className="text-blue-600 font-medium hover:text-blue-800">
+                                Shop T-Shirts →
+                            </Link>
+                        </div>
+
+                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <div className="aspect-square flex items-center justify-center bg-blue-100 rounded-lg mb-4">
+                                <span className="text-6xl">⌚</span>
+                            </div>
+                            <h3 className="text-lg font-bold text-blue-700">Watch Designs</h3>
+                            <p className="text-sm text-gray-600 mb-4">Colorful watch designs by Adyant</p>
+                            <Link href="/art/watches" className="text-blue-600 font-medium hover:text-blue-800">
+                                View Designs →
+                            </Link>
+                        </div>
+
+                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <div className="aspect-square relative rounded-lg overflow-hidden mb-4">
+                                <Image
+                                    src="/images/t-shirts/WhatsApp Image 2025-04-17 at 3.02.27 PM.jpeg"
+                                    alt="Kids Collection"
+                                    fill
+                                    className="object-cover"
+                                    unoptimized
+                                />
+                            </div>
+                            <h3 className="text-lg font-bold text-blue-700">Kids Collection</h3>
+                            <p className="text-sm text-gray-600 mb-4">Special items designed for children</p>
+                            <Link href="/art/kids-collection" className="text-blue-600 font-medium hover:text-blue-800">
+                                Explore Collection →
+                            </Link>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="flex-1 flex justify-center">
-              <div className="h-60 w-60 rounded-full bg-primary flex items-center justify-center text-4xl">
-                👋
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        {/* Interests Sections */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Football */}
-          <section className="section bg-accent">
-            <h2 className="text-xl font-bold mb-3">Football</h2>
-            <p className="mb-4">
-              I love playing football! My favorite position is forward, and I practice my kicks every day. I follow all the big tournaments and dream of being a football star one day!
-            </p>
-            <div className="text-5xl text-center">⚽</div>
-          </section>
 
-          {/* iPad */}
-          <section className="section bg-primary">
-            <h2 className="text-xl font-bold mb-3">iPad</h2>
-            <p className="mb-4">
-              My iPad is one of my favorite things! I use it to play games, watch videos, and learn new things. I've become really good at all my favorite apps and can navigate it like a pro!
-            </p>
-            <div className="text-5xl text-center">📱</div>
-          </section>
-
-          {/* Taco Bell */}
-          <section className="section bg-highlight">
-            <h2 className="text-xl font-bold mb-3">Taco Bell</h2>
-            <p className="mb-4">
-              Taco Bell is my favorite restaurant! I love going there for quesadillas and nachos. The best part is getting a cool toy with my kids meal. It's always a special treat when we go there!
-            </p>
-            <div className="text-5xl text-center">🌮</div>
-          </section>
-
-          {/* Drawing */}
-          <section className="section bg-secondary">
-            <h2 className="text-xl font-bold mb-3">Drawing</h2>
-            <p className="mb-4">
-              I love to draw and create colorful artwork! I can spend hours with my markers and crayons making pictures of everything I see. My fridge at home is covered with all my masterpieces!
-            </p>
-            <div className="text-5xl text-center">🎨</div>
-          </section>
-          
-          {/* Arcade Games */}
-          <section className="section bg-accent">
-            <h2 className="text-xl font-bold mb-3">Arcade Games</h2>
-            <p className="mb-4">
-              Playing arcade games is so much fun! I love racing games, shooting games, and especially the ones where you can win tickets. My high score is always at the top of the leaderboard!
-            </p>
-            <div className="text-5xl text-center">🎮</div>
-          </section>
-          
-          {/* Toys */}
-          <section className="section bg-primary">
-            <h2 className="text-xl font-bold mb-3">Toys</h2>
-            <p className="mb-4">
-              My toy collection is always growing! I especially love action figures, building blocks, and remote control cars. My room is like a toy museum with all my favorite toys on display!
-            </p>
-            <div className="text-5xl text-center">🧸</div>
-          </section>
+            <footer className="bg-blue-800 text-white py-6 mt-auto">
+                <div className="container text-center">
+                    <p>Adyant's Fun World © 2025</p>
+                    <p className="text-sm mt-2">Art that makes a difference!</p>
+                </div>
+            </footer>
         </div>
-        
-        {/* Memory Game */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Let's Play a Game!</h2>
-          <p className="mb-4">
-            Try this memory game! Flip the cards and find the matching pairs. Can you match all of them?
-          </p>
-          <MemoryGame />
-        </section>
-      </div>
-      
-      <footer className="navbar mt-12">
-        <div className="container text-center">
-          <p>Adyant's Fun World © 2025</p>
-        </div>
-      </footer>
-    </div>
-  );
+    );
 }
