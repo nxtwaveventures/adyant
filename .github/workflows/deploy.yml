@@ -5,12 +5,17 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -41,3 +46,6 @@ jobs:
           folder: out  # The folder the action should deploy
           branch: gh-pages  # The branch the action should deploy to
           clean: true  # Automatically remove deleted files from the deployment branch
+          token: ${{ secrets.GITHUB_TOKEN }}  # Use the built-in GitHub token
+          git-config-name: GitHub Actions
+          git-config-email: github-actions@github.com
