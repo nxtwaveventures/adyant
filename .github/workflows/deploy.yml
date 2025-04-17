@@ -41,6 +41,9 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ''
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        
       - name: Export static files
         run: cp -r ./out/_next ./out/next && find ./out -type f -name "*.html" -exec sed -i 's/_next/next/g' {} \;
 
@@ -50,10 +53,11 @@ jobs:
       - name: Add CNAME file
         run: echo "adyantjassi.com" > ./out/CNAME
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          branch: gh-pages
-          folder: out
-          clean: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          path: './out'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
