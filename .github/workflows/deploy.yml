@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
@@ -40,12 +42,13 @@ jobs:
       - name: Add CNAME file
         run: echo "adyantjassi.com" > ./out/CNAME
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload static files to Pages artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          folder: out  # The folder the action should deploy
-          branch: gh-pages  # The branch the action should deploy to
-          clean: true  # Automatically remove deleted files from the deployment branch
-          token: ${{ secrets.GITHUB_TOKEN }}  # Use the built-in GitHub token
-          git-config-name: GitHub Actions
-          git-config-email: github-actions@github.com
+          path: out
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
