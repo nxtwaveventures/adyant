@@ -31,9 +31,6 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ''
 
-      - name: Export static files
-        run: cp -r ./out/_next ./out/next && find ./out -type f -name "*.html" -exec sed -i 's/_next/next/g' {} \;
-
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll
 
