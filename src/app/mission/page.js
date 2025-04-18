@@ -10,7 +10,7 @@ export default function MissionPage() {
             <Navbar />
 
             <div className="container py-8 px-4 max-w-6xl mx-auto">
-                <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">Our Ocean Mission</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">Join Our Mission</h1>
 
                 <div className="bg-blue-50 p-6 rounded-xl mb-12">
                     <h2 className="text-2xl font-bold text-blue-800 mb-4">Make a Difference with Play</h2>

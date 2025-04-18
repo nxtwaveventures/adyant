@@ -4,216 +4,281 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../../../components/Navbar';
+import { useCart } from '../../../components/CartContext';
 
 export default function TShirtCataloguePage() {
-    const [selectedColor, setSelectedColor] = useState('all');
+    const { addToCart } = useCart();
+    const [selectedSize, setSelectedSize] = useState({});
+    const [selectedColor, setSelectedColor] = useState({});
+    const [sizeError, setSizeError] = useState({});
+    const [colorError, setColorError] = useState({});
+    const [addedToCart, setAddedToCart] = useState({});
 
     const tshirts = [
         {
-            id: 't-shirt-1',
-            name: "Colorful Watch Design T-shirt",
-            description: "100% cotton t-shirt featuring Adyant's vibrant watch design",
-            price: 499,
-            colors: ["White", "Blue", "Red"],
-            sizes: ["S", "M", "L", "XL"],
-            image: "/images/t-shirts/WhatsApp Image 2025-04-17 at 3.30.14 PM.jpeg",
-            popular: true,
-            category: "watch-design"
+            id: 't1',
+            name: 'Ocean Friends',
+            description: 'Colorful sea creatures design by Adyant',
+            price: 599,
+            image: '/images/t-shirts/WhatsApp Image 2025-04-17 at 3.30.14 PM.jpeg',
+            colors: ['#3B82F6', '#14B8A6', '#FFFFFF'],
+            colorNames: ['Blue', 'Teal', 'White'],
+            sizes: ['S', 'M', 'L', 'XL']
         },
         {
-            id: 't-shirt-2',
-            name: "Minimalist Stick Figure T-shirt",
-            description: "Soft cotton t-shirt with Adyant's unique stick figure art",
-            price: 449,
-            colors: ["White", "Black", "Gray"],
-            sizes: ["S", "M", "L", "XL"],
-            image: "/images/t-shirts/WhatsApp Image 2025-04-17 at 3.25.28 PM.jpeg",
-            popular: false,
-            category: "stick-figure"
+            id: 't2',
+            name: 'Stick Figure Adventure',
+            description: 'Fun stick figure design by Adyant',
+            price: 549,
+            image: '/images/t-shirts/WhatsApp Image 2025-04-17 at 3.25.28 PM.jpeg',
+            colors: ['#FFFFFF', '#000000', '#EF4444'],
+            colorNames: ['White', 'Black', 'Red'],
+            sizes: ['S', 'M', 'L', 'XL']
         },
         {
-            id: 't-shirt-3',
-            name: "Ocean Friends T-shirt",
-            description: "Premium cotton t-shirt with marine designs by Adyant",
-            price: 499,
-            colors: ["Blue", "Teal", "Navy"],
-            sizes: ["S", "M", "L", "XL"],
-            image: "/images/t-shirts/WhatsApp Image 2025-04-17 at 3.02.27 PM.jpeg",
-            popular: true,
-            category: "ocean-theme"
-        },
+            id: 't3',
+            name: 'Sea Turtle Journey',
+            description: 'Help save turtles with this cute design',
+            price: 649,
+            image: '/images/t-shirts/WhatsApp Image 2025-04-17 at 3.02.27 PM.jpeg',
+            colors: ['#22C55E', '#3B82F6', '#FFFFFF'],
+            colorNames: ['Green', 'Blue', 'White'],
+            sizes: ['S', 'M', 'L', 'XL']
+        }
     ];
 
-    const filterByColor = (tshirt) => {
-        if (selectedColor === 'all') return true;
-        return tshirt.colors.includes(selectedColor);
+    const handleSizeSelect = (tshirtId, size) => {
+        setSelectedSize({ ...selectedSize, [tshirtId]: size });
+        setSizeError({ ...sizeError, [tshirtId]: false });
     };
 
-    const colorOptions = ['all', 'White', 'Blue', 'Black', 'Red', 'Gray', 'Navy', 'Teal'];
+    const handleColorSelect = (tshirtId, colorIndex) => {
+        setSelectedColor({ ...selectedColor, [tshirtId]: colorIndex });
+        setColorError({ ...colorError, [tshirtId]: false });
+    };
+
+    const handleAddToCart = (tshirt) => {
+        // Validate selection
+        if (!selectedSize[tshirt.id]) {
+            setSizeError({ ...sizeError, [tshirt.id]: true });
+            return;
+        }
+        if (selectedColor[tshirt.id] === undefined) {
+            setColorError({ ...colorError, [tshirt.id]: true });
+            return;
+        }
+
+        // Add to cart
+        addToCart({
+            id: tshirt.id,
+            name: tshirt.name,
+            price: tshirt.price,
+            image: tshirt.image,
+            size: selectedSize[tshirt.id],
+            color: tshirt.colorNames[selectedColor[tshirt.id]],
+            quantity: 1
+        });
+
+        // Show added to cart message
+        setAddedToCart({ ...addedToCart, [tshirt.id]: true });
+        setTimeout(() => {
+            setAddedToCart({ ...addedToCart, [tshirt.id]: false });
+        }, 2000);
+    };
 
     return (
         <div className="min-h-screen bg-white">
             <Navbar />
 
-            <div className="container mx-auto px-4 py-8 max-w-6xl">
-                {/* Hero Section */}
-                <section className="mb-12">
-                    <div className="flex items-center mb-4">
-                        <Link href="/art" className="text-sm text-gray-600 hover:text-gray-900 inline-flex items-center mr-4">
-                            <span>← Back to Art</span>
-                        </Link>
-                        <Link href="/art/t-shirt-subscription" className="text-sm text-blue-600 hover:text-blue-800 inline-flex items-center">
-                            <span>Subscriptions →</span>
-                        </Link>
-                    </div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Adyant's T-Shirt Collection</h1>
-                    <div className="h-1 w-16 bg-blue-600 mb-6"></div>
-                    <p className="text-lg text-gray-700 mb-6">
-                        Discover unique t-shirts featuring Adyant's original hand-drawn designs.
-                        Each purchase contributes to ocean cleanup initiatives.
+            <div className="container mx-auto px-4 py-12 max-w-7xl">
+                <header className="mb-12 text-center">
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4">Adyant's T-Shirt Collection</h1>
+                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                        All t-shirts feature original designs by Adyant. Each purchase helps remove plastic from our oceans.
                     </p>
+                </header>
 
-                    {/* Color Filter */}
-                    <div className="mb-8">
-                        <h2 className="text-lg font-medium text-gray-900 mb-3">Filter by Color</h2>
-                        <div className="flex flex-wrap gap-2">
-                            {colorOptions.map(color => (
-                                <button
-                                    key={color}
-                                    onClick={() => setSelectedColor(color)}
-                                    className={`px-3 py-1 rounded-md text-sm capitalize transition-colors ${selectedColor === color
-                                        ? 'bg-blue-600 text-white'
-                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                        }`}
-                                >
-                                    {color}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* T-Shirt Gallery */}
-                <section className="mb-16">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {tshirts.filter(filterByColor).map(tshirt => (
-                            <div key={tshirt.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
-                                <div className="relative aspect-square overflow-hidden rounded-t-lg">
+                <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {tshirts.map((tshirt) => (
+                        <div key={tshirt.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+                            <div className="bg-neutral-50 aspect-square flex items-center justify-center">
+                                <div className="w-full h-full p-6 flex items-center justify-center">
                                     <Image
                                         src={tshirt.image}
-                                        alt={`${tshirt.name} - Designed by Adyant - Premium cotton t-shirt with unique artwork`}
-                                        fill
-                                        className="object-cover hover:scale-105 transition-transform duration-500"
+                                        alt={tshirt.name}
+                                        width={260}
+                                        height={260}
+                                        priority
+                                        style={{
+                                            objectFit: "contain",
+                                            objectPosition: "center",
+                                            maxHeight: "260px"
+                                        }}
+                                        className="rounded-md"
                                         unoptimized
                                     />
-                                    {tshirt.popular && (
-                                        <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold py-1 px-2 rounded-md">
-                                            Popular
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="p-4">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-1">{tshirt.name}</h3>
-                                    <p className="text-gray-600 text-sm mb-3">{tshirt.description}</p>
-
-                                    <div className="flex justify-between items-center mb-3">
-                                        <div className="text-gray-900 font-bold">₹{tshirt.price}</div>
-                                        <div className="text-xs text-green-600">Free shipping</div>
-                                    </div>
-
-                                    <div className="mb-3">
-                                        <div className="text-sm font-medium text-gray-700 mb-1">Available Colors:</div>
-                                        <div className="flex gap-1">
-                                            {tshirt.colors.map(color => (
-                                                <div
-                                                    key={color}
-                                                    className="w-6 h-6 rounded-full border border-gray-300"
-                                                    style={{ backgroundColor: color.toLowerCase() }}
-                                                    title={color}
-                                                ></div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div className="mb-4">
-                                        <div className="text-sm font-medium text-gray-700 mb-1">Sizes:</div>
-                                        <div className="flex gap-1">
-                                            {tshirt.sizes.map(size => (
-                                                <div
-                                                    key={size}
-                                                    className="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded-md"
-                                                >
-                                                    {size}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium py-2 rounded-md transition-all duration-300 transform hover:scale-[1.02] shadow-md">
-                                        Add to Cart
-                                    </button>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                            <div className="p-6">
+                                <h2 className="text-xl font-bold mb-2">{tshirt.name}</h2>
+                                <p className="text-gray-600 mb-4">{tshirt.description}</p>
+                                <p className="text-2xl font-bold text-blue-600 mb-4">₹{tshirt.price}</p>
+
+                                {/* Sizes */}
+                                <div className="mb-4">
+                                    <h3 className="text-sm font-medium text-gray-700 mb-2">Size</h3>
+                                    <div className="flex space-x-2">
+                                        {tshirt.sizes.map((size) => (
+                                            <button
+                                                key={size}
+                                                onClick={() => handleSizeSelect(tshirt.id, size)}
+                                                className={`py-2 px-4 rounded-md text-sm ${selectedSize[tshirt.id] === size
+                                                    ? 'bg-blue-600 text-white'
+                                                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                                                    }`}
+                                            >
+                                                {size}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    {sizeError[tshirt.id] && (
+                                        <p className="text-red-500 text-sm mt-1">Please select a size</p>
+                                    )}
+                                </div>
+
+                                {/* Colors */}
+                                <div className="mb-6">
+                                    <h3 className="text-sm font-medium text-gray-700 mb-2">Color</h3>
+                                    <div className="flex space-x-2">
+                                        {tshirt.colors.map((color, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => handleColorSelect(tshirt.id, index)}
+                                                className={`w-8 h-8 rounded-full border-2 ${selectedColor[tshirt.id] === index
+                                                    ? 'border-blue-600'
+                                                    : 'border-transparent'
+                                                    }`}
+                                                style={{ backgroundColor: color }}
+                                                aria-label={`Color ${tshirt.colorNames[index]}`}
+                                                title={tshirt.colorNames[index]}
+                                            ></button>
+                                        ))}
+                                    </div>
+                                    {colorError[tshirt.id] && (
+                                        <p className="text-red-500 text-sm mt-1">Please select a color</p>
+                                    )}
+                                </div>
+
+                                {/* Add to Cart Button */}
+                                <button
+                                    onClick={() => handleAddToCart(tshirt)}
+                                    className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${addedToCart[tshirt.id]
+                                        ? 'bg-green-600 text-white'
+                                        : 'bg-blue-600 text-white hover:bg-blue-700'
+                                        }`}
+                                >
+                                    {addedToCart[tshirt.id] ? 'Added to Cart!' : 'Add to Cart'}
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </section>
 
                 {/* Environmental Impact */}
-                <section className="bg-gray-50 rounded-lg p-6 md:p-8 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Purchase Makes a Difference</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
-                            <div className="h-12 flex items-center justify-center mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 text-blue-500">
-                                    <path fillRule="evenodd" d="M4.804 21.644A6.707 6.707 0 006 21.75a6.721 6.721 0 003.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.09.859 4.004 2.273 5.48a6.72 6.72 0 00-1.952 2.544c-.24.556-.22 1.18.051 1.72.27.532.758.905 1.33 1.02.57.113 1.157.028 1.627-.26.446-.273.84-.627 1.185-1.042zM12 15a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                                    <path d="M14.084 2.679l-3 7a1 1 0 001.32 1.314l7-3a1 1 0 00-.108-1.85l-7-3a1 1 0 00-1.212.536z" />
-                                </svg>
+                <section className="mt-16 bg-blue-50 p-8 rounded-xl">
+                    <h2 className="text-2xl font-bold mb-4 text-center">Every Purchase Makes an Impact</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div className="flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <span className="text-3xl">🌊</span>
                             </div>
-                            <h3 className="font-bold text-lg text-gray-900 mb-1">Ocean Cleanup</h3>
-                            <p className="text-gray-600 text-sm">50% of profits go directly to removing plastic from our oceans</p>
+                            <h3 className="text-lg font-bold mb-2">Ocean Cleanup</h3>
+                            <p className="text-gray-600">50% of profits fund removing plastic waste from oceans.</p>
                         </div>
-
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
-                            <div className="h-12 flex items-center justify-center mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 text-purple-500">
-                                    <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
-                                    <path d="M3 6a3 3 0 00-3 3v1.5a.75.75 0 001.5 0V9A1.5 1.5 0 013 7.5h1.5a.75.75 0 000-1.5H3zM9 3a.75.75 0 01.75.75V4.5a.75.75 0 01-1.5 0V3.75A.75.75 0 019 3zM3.75 15a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H4.5a.75.75 0 01-.75-.75zM12 12.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z" />
-                                </svg>
+                        <div className="flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <span className="text-3xl">👕</span>
                             </div>
-                            <h3 className="font-bold text-lg text-gray-900 mb-1">Premium Quality</h3>
-                            <p className="text-gray-600 text-sm">100% soft cotton t-shirts that are comfortable for everyday wear</p>
+                            <h3 className="text-lg font-bold mb-2">100% Cotton</h3>
+                            <p className="text-gray-600">Our shirts are made from premium soft cotton for comfort.</p>
                         </div>
-
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
-                            <div className="h-12 flex items-center justify-center mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 text-indigo-500">
-                                    <path fillRule="evenodd" d="M20.599 1.5c-.376 0-.743.111-1.055.32L11.5 7.25l-1.979-2.15L9.5 5l-.026.026A1 1 0 008 5.026v13.5c0 .138.112.25.25.25h1.5A.25.25 0 0010 18.5v-.714l1.933-.512a31.61 31.61 0 016.533-.673h.5v-9.5h-.097a1 1 0 00-.366-.71l-.232-.213A1 1 0 0017.5 6.5l-2-2a1 1 0 00-.707-.293l-.768-.768a1 1 0 00-.707-.293L13 3a1 1 0 00-.707.293L11.5 4.086l-1.5-1.5A1 1 0 008.981 2H5.5a1 1 0 00-1 1V14a1 1 0 001 1h2.25v3.25c0 .138.112.25.25.25h1.5a.25.25 0 00.25-.25V15h1.5c.138 0 .25-.112.25-.25v-2.5h2.25c.138 0 .25-.112.25-.25v-2.5h2.25a.75.75 0 00.75-.75V4.5a.75.75 0 00-.75-.75h-.5a.75.75 0 00-.75.75v2.25h-1.5v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v1.5h-1.5v-2.5a.75.75 0 00-.75-.75H5.5v-1h3.5l1.5 1.5-1.5 1.5h-1.5v-1h-1v1h-.5a.75.75 0 00-.75.75v2.5h-1.5v-2.5a.75.75 0 00-.75-.75H2v-1h1.5a.75.75 0 00.75-.75v-1h1v1h.5a.75.75 0 00.75-.75v-1.5a.75.75 0 00-.75-.75H4v-1.5h1v1h1.5v-1h1a.75.75 0 00.75-.75V2.5a.75.75 0 00-.75-.75H5.5v-.25c0-.414.336-.75.75-.75h2.563c.37 0 .725.147.987.409L11.5 3.107l.657-.657a.75.75 0 01.53-.22h2.813a.75.75 0 01.53.22l.647.647a.75.75 0 01.22.53v2.313c0 .2-.077.388-.218.53l-3.769 3.769a.75.75 0 01-.53.218H9.5a.75.75 0 01-.53-.218l-3.75-3.75A.75.75 0 015 6.25V3.5h-.75a.75.75 0 01-.75-.75V1.5h-.725z" clipRule="evenodd" />
-                                </svg>
+                        <div className="flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <span className="text-3xl">✏️</span>
                             </div>
-                            <h3 className="font-bold text-lg text-gray-900 mb-1">Unique Designs</h3>
-                            <p className="text-gray-600 text-sm">Each design is hand-drawn by Adyant, making every shirt special</p>
+                            <h3 className="text-lg font-bold mb-2">Kid-Designed</h3>
+                            <p className="text-gray-600">Every design is created by Adyant, a young artist with a mission.</p>
                         </div>
                     </div>
                 </section>
 
-                {/* Subscription CTA */}
-                <section className="bg-blue-600 text-white rounded-lg p-6 md:p-8 mb-12">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div>
-                            <h2 className="text-2xl font-bold mb-2">Love Our T-shirts?</h2>
-                            <p className="text-blue-100">Subscribe to receive 3 new designs every season and save up to 15%</p>
+                {/* Subscription Section */}
+                <section className="mt-16 mb-12 bg-gradient-to-r from-blue-600 to-purple-600 p-8 rounded-xl text-white">
+                    <div className="flex flex-col md:flex-row items-center justify-between">
+                        <div className="mb-6 md:mb-0 md:w-2/3">
+                            <h2 className="text-2xl font-bold mb-2">Subscribe and Save!</h2>
+                            <p className="text-lg opacity-90">Get new shirts delivered every month and save up to 20%.</p>
                         </div>
-                        <Link href="/art/t-shirt-subscription" className="bg-white text-blue-600 hover:bg-blue-50 transition-colors py-3 px-6 rounded-md font-bold whitespace-nowrap">
-                            View Subscription Plans
+                        <Link href="/art/t-shirt-subscription"
+                            className="bg-white text-blue-600 py-3 px-6 rounded-lg font-bold hover:bg-blue-50 transition-colors">
+                            Subscribe Now →
                         </Link>
+                    </div>
+                </section>
+
+                {/* Customer Reviews Section */}
+                <section className="mt-16 bg-gray-50 p-8 rounded-xl">
+                    <h2 className="text-2xl font-bold mb-6 text-center">What Our Customers Say</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex items-center mb-4">
+                                <div className="text-yellow-400 flex">
+                                    {[...Array(5)].map((_, i) => (
+                                        <svg key={i} xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    ))}
+                                </div>
+                            </div>
+                            <p className="text-gray-600 mb-4">"My son loves his ocean t-shirt! The design is so cute and knowing we're helping clean the oceans makes it even better."</p>
+                            <p className="font-bold">- Priya M.</p>
+                        </div>
+
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex items-center mb-4">
+                                <div className="text-yellow-400 flex">
+                                    {[...Array(5)].map((_, i) => (
+                                        <svg key={i} xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    ))}
+                                </div>
+                            </div>
+                            <p className="text-gray-600 mb-4">"The ocean cleanup game is so engaging! My kids play it for hours while learning about environmental issues. The t-shirts are great quality too!"</p>
+                            <p className="font-bold">- Rahul K.</p>
+                        </div>
+
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex items-center mb-4">
+                                <div className="text-yellow-400 flex">
+                                    {[...Array(5)].map((_, i) => (
+                                        <svg key={i} xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    ))}
+                                </div>
+                            </div>
+                            <p className="text-gray-600 mb-4">"I bought this for my nephew and he won't take it off! I love supporting a cause that helps our planet while getting such a unique design made by a child."</p>
+                            <p className="font-bold">- Anika S.</p>
+                        </div>
                     </div>
                 </section>
             </div>
 
-            <footer className="bg-gray-100 py-6">
-                <div className="container mx-auto text-center text-gray-600">
-                    <p>© 2025 Adyant's Creative World</p>
+            <footer className="bg-gray-100 py-8">
+                <div className="container mx-auto px-4 text-center">
+                    <p className="text-gray-600">© 2025 Adyant's Fun World. All rights reserved.</p>
+                    <p className="text-gray-500 mt-2">Kid-designed t-shirts that help save our oceans.</p>
                 </div>
             </footer>
         </div>

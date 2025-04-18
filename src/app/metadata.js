@@ -16,7 +16,7 @@ export const metadata = {
         "creative",
         "charity",
     ],
-    metadataBase: new URL('http://localhost:3000'),
+    metadataBase: new URL("https://adyantjassi.com"),
     openGraph: {
         title: "Adyant's Fun World",
         description: "Join Adyant in fun games, videos, stories and art while supporting education and ocean cleanup!",

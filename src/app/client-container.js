@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 import PrivacyBanner from '../components/PrivacyBanner';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // Dynamically import the AnimatedCursor to avoid SSR issues
 const AnimatedCursor = dynamic(() => import('../components/AnimatedCursor'), {
@@ -24,10 +25,10 @@ export default function ClientContainer({ children }) {
     }, []);
 
     return (
-        <>
+        <ErrorBoundary>
             {children}
             <PrivacyBanner />
             {isMounted && <AnimatedCursor />}
-        </>
+        </ErrorBoundary>
     );
 } 
