@@ -12,38 +12,18 @@ const nextConfig = {
   },
   // Performance optimizations
   reactStrictMode: true,
-  swcMinify: true,
-  // Increase build timeout
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb',
-    },
-    // Optimize memory usage
-    memoryBasedWorkersCount: true,
-  },
-  // External packages setting
-  serverExternalPackages: [],
+  // Production settings
+  output: 'export',  // Static site generation for GitHub Pages
+  trailingSlash: true, // Add trailing slashes to all URLs
   // Improve file serving
   poweredByHeader: false,
   compress: true,
   // Production settings
-  output: 'export',  // Static site generation for GitHub Pages
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
   // Avoid cache collisions
   generateBuildId: async () => {
     return `build-${new Date().getTime()}`;
-  },
-  // Note: with output: 'export', redirects won't automatically work
-  // Adding this for development mode and documentation
-  async redirects() {
-    return [
-      {
-        source: '/shop',
-        destination: '/art/t-shirt-catalogue',
-        permanent: true,
-      },
-    ];
   },
   // Allow proper error handling
   onDemandEntries: {

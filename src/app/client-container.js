@@ -19,8 +19,22 @@ export default function ClientContainer({ children }) {
         // Add smooth scrolling to the document
         document.documentElement.style.scrollBehavior = 'smooth';
 
+        // Handle any unhandled promise rejections (including connection errors)
+        const handleUnhandledRejection = (event) => {
+            event.preventDefault();
+            console.error('Connection error:', event.reason);
+
+            // Only reload if it's a connection error
+            if (event.reason?.message?.includes('Connection closed')) {
+                window.location.reload();
+            }
+        };
+
+        window.addEventListener('unhandledrejection', handleUnhandledRejection);
+
         return () => {
             document.documentElement.style.scrollBehavior = 'auto';
+            window.removeEventListener('unhandledrejection', handleUnhandledRejection);
         };
     }, []);
 
