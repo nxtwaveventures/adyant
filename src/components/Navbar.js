@@ -1,18 +1,19 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useCart } from './CartContext';
 import Cart from './Cart';
+import Logo from './Logo';
 
-export default function Navbar() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-    const [activeLink, setActiveLink] = useState('/');
+const Navbar = () => {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [scrolled, setScrolled] = React.useState(false);
+    const [activeLink, setActiveLink] = React.useState('/');
     const { cartOpen, setCartOpen, totalItems } = useCart();
 
     // Handle scroll events for navbar transformation
-    useEffect(() => {
+    React.useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 10) {
                 setScrolled(true);
@@ -26,7 +27,7 @@ export default function Navbar() {
     }, []);
 
     // Set active link based on current pathname
-    useEffect(() => {
+    React.useEffect(() => {
         if (typeof window !== 'undefined') {
             setActiveLink(window.location.pathname);
         }
@@ -38,8 +39,9 @@ export default function Navbar() {
                 <div className="container mx-auto px-4">
                     <div className="flex justify-between items-center">
                         {/* Logo */}
-                        <Link href="/" className="flex items-center">
-                            <span className={`text-xl font-bold transition-colors ${scrolled || isMenuOpen ? 'text-blue-600' : 'text-blue-600 md:text-white'}`}>
+                        <Link href="/" className="flex items-center space-x-2">
+                            <Logo width={50} height={50} className="hover:scale-110 transition-transform duration-300" />
+                            <span className={`text-2xl font-bold transition-colors ${scrolled || isMenuOpen ? 'text-blue-600' : 'text-blue-600 md:text-white'}`}>
                                 Adyant's Fun World
                             </span>
                         </Link>
@@ -131,4 +133,6 @@ export default function Navbar() {
             <div className={`w-full ${scrolled ? 'h-16' : 'h-20'} transition-all duration-300`}></div>
         </>
     );
-}
+};
+
+export default Navbar;

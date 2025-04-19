@@ -1353,7 +1353,8 @@ button:active,
 
 @layer base {
   body {
-    @apply bg-gradient-peacock min-h-screen text-white;
+    @apply min-h-screen text-white;
+    background: linear-gradient(135deg, var(--peacock-blue), var(--peacock-teal), var(--peacock-green));
   }
 
   /* Add shimmer effect to certain elements */
@@ -1374,7 +1375,10 @@ button:active,
   }
 
   .text-gradient-peacock {
-    @apply bg-clip-text text-transparent bg-gradient-peacock;
+    background: linear-gradient(135deg, var(--peacock-blue), var(--peacock-teal), var(--peacock-green));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .hover-shimmer:hover {
