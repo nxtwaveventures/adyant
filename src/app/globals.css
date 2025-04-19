@@ -53,6 +53,9 @@
   --gradient-1: linear-gradient(135deg, var(--primary), var(--secondary));
   --gradient-2: linear-gradient(135deg, var(--accent), var(--highlight));
   --gradient-3: linear-gradient(135deg, var(--secondary), var(--accent));
+
+  --primary-light: #4b6cb7;
+  --primary-dark: #182848;
 }
 
 @theme inline {
@@ -1341,4 +1344,17 @@ button:active,
   border-radius: 4px;
   font-family: monospace;
   letter-spacing: 1px;
+}
+
+@layer base {
+  body {
+    @apply bg-gradient-to-r from-primary-light to-primary-dark min-h-screen text-white;
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-primary;
+  }
 }

@@ -6,7 +6,18 @@ module.exports = {
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: {
+                    light: '#4b6cb7',
+                    dark: '#182848',
+                }
+            },
+            backgroundImage: {
+                'gradient-primary': 'linear-gradient(to right, #4b6cb7, #182848)',
+                'gradient-primary-vertical': 'linear-gradient(to bottom, #4b6cb7, #182848)',
+            },
+        },
     },
     plugins: [],
 } 
