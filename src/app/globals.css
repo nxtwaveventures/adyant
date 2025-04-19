@@ -56,6 +56,11 @@
 
   --primary-light: #4b6cb7;
   --primary-dark: #182848;
+
+  --peacock-blue: #005C97;
+  --peacock-teal: #00B4DB;
+  --peacock-green: #1CB5AB;
+  --peacock-gold: #FFD700;
 }
 
 @theme inline {
@@ -1348,7 +1353,17 @@ button:active,
 
 @layer base {
   body {
-    @apply bg-gradient-to-r from-primary-light to-primary-dark min-h-screen text-white;
+    @apply bg-gradient-peacock min-h-screen text-white;
+  }
+
+  /* Add shimmer effect to certain elements */
+  .shimmer {
+    background: linear-gradient(90deg,
+        var(--peacock-blue) 0%,
+        var(--peacock-teal) 50%,
+        var(--peacock-green) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 8s linear infinite;
   }
 }
 
@@ -1356,5 +1371,23 @@ button:active,
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-primary;
+  }
+
+  .text-gradient-peacock {
+    @apply bg-clip-text text-transparent bg-gradient-peacock;
+  }
+
+  .hover-shimmer:hover {
+    @apply shimmer;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
   }
 }
