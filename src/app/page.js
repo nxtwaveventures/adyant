@@ -17,21 +17,21 @@ export default function Home() {
                         <div className="flex flex-col md:flex-row items-center gap-8">
                             <div className="flex-1">
                                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                                    Welcome to Adyant's Fun World
+                                    Kid-Designed Fashion for Ocean Conservation
                                 </h1>
                                 <p className="text-white text-lg mb-6">
-                                    Kid-designed t-shirts that help save our oceans
+                                    Shop creative t-shirts and watches designed by 6-year-old Adyant. 50% of every purchase helps clean our oceans!
                                 </p>
                                 <div className="flex flex-wrap gap-4">
                                     <Link href="/art"
                                         className="bg-white text-blue-600 py-3 px-6 rounded-lg font-bold hover:bg-blue-50 transition-colors">
-                                        Explore T-shirts
+                                        Shop Collection
                                     </Link>
                                     <Link
                                         href="/mission"
                                         className="inline-block px-6 py-3 text-white bg-blue-500 rounded-full hover:bg-blue-600 transition-colors border-2 border-white"
                                     >
-                                        Join Our Mission
+                                        Play & Save Oceans
                                     </Link>
                                 </div>
                             </div>
@@ -50,6 +50,25 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+
+                {/* Quick Stats */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div className="bg-white p-6 rounded-lg shadow-md text-center">
+                        <div className="text-4xl mb-2">🎨</div>
+                        <h3 className="font-bold text-xl mb-2">Kid Artist</h3>
+                        <p className="text-gray-600">Unique designs by 6-year-old Adyant</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-md text-center">
+                        <div className="text-4xl mb-2">🌊</div>
+                        <h3 className="font-bold text-xl mb-2">Ocean Impact</h3>
+                        <p className="text-gray-600">50% of proceeds fund ocean cleanup</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-md text-center">
+                        <div className="text-4xl mb-2">🎮</div>
+                        <h3 className="font-bold text-xl mb-2">Play & Save</h3>
+                        <p className="text-gray-600">Play games to earn discounts</p>
+                    </div>
+                </div>
 
                 {/* Available On Section */}
                 <div className="bg-white py-6 mb-8">
@@ -79,15 +98,22 @@ export default function Home() {
                     <div className="container mx-auto px-4">
                         <div className="flex flex-col items-center">
                             <div className="w-full max-w-xl text-center">
-                                <h2 className="text-2xl md:text-3xl font-bold mb-4">Meet Adyant: 6-Year-Old Ocean Protector</h2>
-                                <p className="mb-4">
-                                    Hi! I'm Adyant! I love football, Minecraft (don't tell Mom 🤫), and saving oceans!
-                                    Buy my cool t-shirts to help clean up plastic and play my awesome game!
+                                <h2 className="text-2xl md:text-3xl font-bold mb-4">Meet Adyant: Young Artist & Ocean Advocate</h2>
+                                <p className="mb-4 text-lg">
+                                    Hi! I'm Adyant, a 6-year-old artist who loves drawing and protecting our oceans.
+                                    I create fun designs for t-shirts and watches, and half of what you pay goes to
+                                    cleaning plastic from our oceans! You can also play my ocean cleanup game to earn discounts.
                                 </p>
-                                <div className="mt-6">
+                                <div className="mt-6 flex gap-4 justify-center">
+                                    <Link
+                                        href="/art"
+                                        className="inline-block px-8 py-4 bg-blue-500 text-white font-bold rounded-full hover:bg-blue-600 transition-colors text-lg"
+                                    >
+                                        See My Designs
+                                    </Link>
                                     <Link
                                         href="/mission"
-                                        className="inline-block px-8 py-4 bg-blue-500 text-white font-bold rounded-full hover:bg-blue-600 transition-colors text-lg"
+                                        className="inline-block px-8 py-4 bg-green-500 text-white font-bold rounded-full hover:bg-green-600 transition-colors text-lg"
                                     >
                                         Play Ocean Game
                                     </Link>
