@@ -1,10 +1,10 @@
 import React from 'react';
-import products from '../../../data/products';
+import { products } from '../../../data/products';
 import ProductDetails from '../../../components/ProductDetails';
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
     return products.map((product) => ({
-        id: product.id.toString(),
+        id: product.id.toString()
     }));
 }
 
