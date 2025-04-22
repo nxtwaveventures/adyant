@@ -1,25 +1,27 @@
 export const metadata = {
-    title: "Adyant's Fun World",
-    description: "Join Adyant in fun games, videos, stories and art while supporting education and ocean cleanup!",
+    title: "Adyant's Fun World - Organic Cotton T-Shirts",
+    description: "Discover unique, naturally-dyed 100% organic cotton t-shirts designed exclusively by Adyant and the kids team. Each purchase supports education and ocean cleanup initiatives.",
     icons: {
         icon: "/favicon.ico",
     },
     keywords: [
         "Adyant",
-        "art",
-        "kids",
+        "organic cotton t-shirts",
+        "naturally dyed",
+        "kids designs",
         "ocean cleanup",
         "education",
-        "t-shirts",
-        "watches",
         "environmental",
         "creative",
         "charity",
     ],
+    authors: [{ name: "Adyant's Fun World" }],
     metadataBase: new URL("https://adyantjassi.com"),
     openGraph: {
-        title: "Adyant's Fun World",
-        description: "Join Adyant in fun games, videos, stories and art while supporting education and ocean cleanup!",
+        title: "Adyant's Fun World - Organic Cotton T-Shirts",
+        description: "Discover unique, naturally-dyed 100% organic cotton t-shirts designed exclusively by Adyant and the kids team.",
+        url: "https://adyantjassi.com",
+        siteName: "Adyant's Fun World",
         images: [
             {
                 url: "/images/adyant-watches-drawing.jpg",
@@ -30,5 +32,11 @@ export const metadata = {
         ],
         locale: "en_US",
         type: "website",
-    }
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'The Bamboo Baby - Sustainable Baby Products',
+        description: 'Discover our collection of sustainable, organic baby products made with love and care.',
+        images: ['/images/twitter-image.jpg'],
+    },
 }; 

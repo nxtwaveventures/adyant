@@ -1,38 +1,34 @@
+'use client';
+
 import './globals.css';
-import { Montserrat } from 'next/font/google';
-import ClientContainer from './client-container';
+import { Inter } from 'next/font/google';
 import { CartProvider } from '../components/CartContext';
 import Navbar from '../components/Navbar';
+import CookieConsent from '../components/CookieConsent';
+import Footer from '../components/Footer';
 
-// Import metadata from separate file
-import { metadata } from './metadata';
+const inter = Inter({ subsets: ['latin'] });
 
-// Export metadata for Next.js
-export { metadata };
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-montserrat',
-});
-
-// Root layout (Server Component)
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={montserrat.variable}>
+    <html lang="en" className={inter.className}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#6200ea" />
+        <meta name="theme-color" content="#312e81" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <title>Adyant's World - Ocean Conservation through Minecraft</title>
+        <meta name="description" content="Join Adyant on fun Minecraft adventures while learning about ocean conservation!" />
       </head>
-      <body className="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+      <body>
         <CartProvider>
-          <ClientContainer>
+          <div className="flex flex-col min-h-screen">
             <Navbar />
-            <main className="container mx-auto px-4 py-8">
+            <main className="flex-grow">
               {children}
             </main>
-          </ClientContainer>
+            <Footer />
+            <CookieConsent />
+          </div>
         </CartProvider>
       </body>
     </html>
