@@ -1,42 +1,42 @@
 export const metadata = {
-    title: "Adyant's Fun World - Organic Cotton T-Shirts",
-    description: "Discover unique, naturally-dyed 100% organic cotton t-shirts designed exclusively by Adyant and the kids team. Each purchase supports education and ocean cleanup initiatives.",
-    icons: {
-        icon: "/favicon.ico",
-    },
-    keywords: [
-        "Adyant",
-        "organic cotton t-shirts",
-        "naturally dyed",
-        "kids designs",
-        "ocean cleanup",
-        "education",
-        "environmental",
-        "creative",
-        "charity",
-    ],
-    authors: [{ name: "Adyant's Fun World" }],
-    metadataBase: new URL("https://adyantjassi.com"),
+    metadataBase: new URL('https://adyantsworld.com'),
+    title: "Adyant's World - Ocean Conservation through Minecraft",
+    description: "Join Adyant on fun Minecraft adventures while learning about ocean conservation!",
+    keywords: ['minecraft', 'ocean conservation', 'kids gaming', 'environmental education'],
     openGraph: {
-        title: "Adyant's Fun World - Organic Cotton T-Shirts",
-        description: "Discover unique, naturally-dyed 100% organic cotton t-shirts designed exclusively by Adyant and the kids team.",
-        url: "https://adyantjassi.com",
-        siteName: "Adyant's Fun World",
+        title: "Adyant's World",
+        description: "Join Adyant on fun Minecraft adventures while learning about ocean conservation!",
+        url: 'https://adyantsworld.com',
+        siteName: "Adyant's World",
         images: [
             {
-                url: "/images/adyant-watches-drawing.jpg",
+                url: '/images/og-image.jpg',
                 width: 1200,
                 height: 630,
-                alt: "Adyant's Fun World",
-            },
+                alt: "Adyant's World - Ocean Conservation through Minecraft"
+            }
         ],
-        locale: "en_US",
-        type: "website",
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'The Bamboo Baby - Sustainable Baby Products',
-        description: 'Discover our collection of sustainable, organic baby products made with love and care.',
-        images: ['/images/twitter-image.jpg'],
+        title: "Adyant's World",
+        description: "Join Adyant on fun Minecraft adventures while learning about ocean conservation!",
+        images: ['/images/og-image.jpg'],
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
+    verification: {
+        google: 'your-google-verification-code',
     },
 }; 

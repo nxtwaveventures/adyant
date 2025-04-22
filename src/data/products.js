@@ -184,5 +184,34 @@ export const products = [
             "Kid-friendly design",
             "Supports both causes"
         ]
+    },
+    {
+        id: 13,
+        name: "Ocean Guardian",
+        description: "100% organic cotton t-shirt featuring Adyant's ocean cleanup design. Each purchase helps remove plastic from our oceans and supports marine life conservation efforts.",
+        price: 24.99,
+        image: "/images/tshirts/ocean-guardian.jpg",
+        sizes: ["XS", "S", "M", "L", "XL"],
+        colors: ["Ocean Blue", "Coral Pink", "Sea Green"]
+    },
+    {
+        id: 14,
+        name: "Marine Friends",
+        description: "Naturally dyed t-shirt with playful sea creatures design. A portion of each sale goes towards marine education programs for children.",
+        price: 24.99,
+        image: "/images/tshirts/marine-friends.jpg",
+        sizes: ["XS", "S", "M", "L", "XL"],
+        colors: ["Wave Blue", "Sand Beige", "Sunset Orange"]
+    },
+    {
+        id: 15,
+        name: "Save Our Seas",
+        description: "Eco-friendly t-shirt with ocean conservation message. Wear your commitment to ocean protection with this unique design.",
+        price: 24.99,
+        image: "/images/tshirts/save-seas.jpg",
+        sizes: ["XS", "S", "M", "L", "XL"],
+        colors: ["Deep Blue", "Aqua", "Pearl White"]
     }
-]; 
+];
+
+export default products; 
