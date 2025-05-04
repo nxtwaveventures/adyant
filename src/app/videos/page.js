@@ -5,22 +5,22 @@ import React from 'react';
 const videos = [
     {
         id: 1,
-        title: "Puffy's Ocean Adventure",
-        description: "Join Puffy the cloud as she helps clean the ocean and meets new friends!",
+        title: "Adyant Plays Minecraft!",
+        description: "Watch Adyant build, explore, and go on adventures in the world of Minecraft.",
         url: "https://www.youtube.com/embed/1A2b3C4d5E6", // Replace with real video
         thumbnail: "https://img.youtube.com/vi/1A2b3C4d5E6/hqdefault.jpg"
     },
     {
         id: 2,
-        title: "Meet the Ocean Friends",
-        description: "Discover the amazing creatures that live in the ocean and how they work together.",
+        title: "Adyant's Football Fun",
+        description: "See Adyant show off his football skills, score goals, and have fun on the field!",
         url: "https://www.youtube.com/embed/2B3c4D5e6F7", // Replace with real video
         thumbnail: "https://img.youtube.com/vi/2B3c4D5e6F7/hqdefault.jpg"
     },
     {
         id: 3,
-        title: "The Magical Forest",
-        description: "Explore a magical forest where trees talk and animals are your friends!",
+        title: "Adyant's Gaming Tricks for Little Ones",
+        description: "Adyant shares his favorite gaming tips and tricks for young players!",
         url: "https://www.youtube.com/embed/3C4d5E6f7G8", // Replace with real video
         thumbnail: "https://img.youtube.com/vi/3C4d5E6f7G8/hqdefault.jpg"
     }
